@@ -104,7 +104,6 @@ fiche_etudiant
 #Redirection du résultat dans un fichier#
 #########################################
 
-echo -e "$fiche_vierge" >> /home/admin123/save/fiches/"$namefile.txt"
-
+echo -e "$fiche_vierge" >> /home/admin123/save/fiches/"$namefile.txt
 
 exit 0
