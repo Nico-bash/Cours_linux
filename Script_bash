@@ -1,0 +1,110 @@
+#!/bin/bash 
+
+#NOM : FICHE ETUDIANT
+
+#########################
+###Gestion de signal#####
+#########################
+
+trap 'echo Le script est terminé; exit' SIGINT
+
+
+##############################
+#ICI déclaration de variables#
+##############################
+
+echo -e 'Bonjour, merci de répondre aux questions suivantes :\n'  
+
+declare -a fiche=('Votre prenom ?' 'Votre nom ?' 'votre âge ?' 'Votre profession ?')
+#echo "${fiche[*]}"
+
+declare -a ficherep=()
+
+declare i=0
+
+declare prenom=" "
+
+declare nom=" "
+
+declare age=" "
+
+declare profession=" "
+
+
+###############################################
+#Première fonction visant à remplir le tableau#
+#avec les informations des étudiants          #
+###############################################
+
+
+function fiche_etudiant()
+{
+fiche_vierge="
+      -------------------------
+      |Prénom         | $prenom
+      ------------|------------
+      |Nom        | $nom
+      ------------|------------
+      |Age        | $age
+      ------------|------------
+      |Profession | $profession
+      -----------|-------------"
+echo "$fiche_vierge"
+}
+
+
+
+######################################################
+#Seconde fonction visant à récupérer les informations#
+#saisies par les étudiants                           #
+######################################################
+
+
+function recuperation()
+{
+for rep in "${fiche[@]}"
+do
+        echo -e "$rep\n"
+        read reponse
+        ficherep[$i]+="$reponse"
+        let i++
+        #echo ${ficherep[@]}
+        namefile="${ficherep[0]}"."${ficherep[1]}"
+        #echo "$namefile"
+done
+
+}
+
+
+###############################################
+#Dernière fonction visant à remplir le tableau#
+###############################################
+
+
+function remplissage()
+{
+prenom="${ficherep[0]}"
+nom="${ficherep[1]}"
+age="${ficherep[2]}"
+profession="${ficherep[3]}"
+}
+
+
+####################
+#Appel des fonction#
+####################
+
+
+recuperation
+remplissage
+fiche_etudiant
+
+
+#########################################
+#Redirection du résultat dans un fichier#
+#########################################
+
+echo -e "$fiche_vierge" >> /home/admin123/save/fiches/"$namefile.txt"
+
+
+exit 0
